@@ -30,7 +30,43 @@ ball.shape("circle")
 ball.color("white")
 ball.penup()
 ball.goto(0,0)
+ball.dx=0.3 #the ball moves by 0.3 pixel x
+ball.dy=0.3
+
+#Function for movement
+def pad_1_up():
+    y = pad_1.ycor() #from turtle module, returns the y coordinates
+    y += 20
+    pad_1.sety(y) #set ycor to new value of y
+    
+def pad_1_down():
+    y = pad_1.ycor() #from turtle module, returns the y coordinates
+    y -= 20
+    pad_1.sety(y) #set ycor to new value of y
+    
+def pad_2_up():
+    y = pad_2.ycor() #from turtle module, returns the y coordinates
+    y += 20
+    pad_2.sety(y) #set ycor to new value of y
+    
+def pad_2_down():
+    y = pad_2.ycor() #from turtle module, returns the y coordinates
+    y -= 20
+    pad_2.sety(y) #set ycor to new value of y
+
+#Keyboard binding
+wn.listen() #listen to keyboard commands/inputs
+wn.onkeypress(pad_1_up, "w")
+wn.onkeypress(pad_1_down, "s")
+wn.onkeypress(pad_2_up, "Up")
+wn.onkeypress(pad_2_down, "Down")
 
 #Main game loop
 while True:
     wn.update()  #everytime loop reuns, the game window is updated 
+
+    
+    #Ball Movement
+    ball.setx(ball.xcor() + ball.dx)
+    ball.sety(ball.ycor() + ball.dy)
+    
