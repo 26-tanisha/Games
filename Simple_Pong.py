@@ -84,27 +84,29 @@ while True:
     ball.sety(ball.ycor() + ball.dy)
     
     #Border Checking for ball
+    #Top and Bottom
     if ball.ycor() > 290:
         ball.sety(290)
         ball.dy*= -1 #reverse the ball direction (bounce of the ball from boundry)
         
-    if ball.ycor() < -290:
+    elif ball.ycor() < -290:
         ball.sety(-290)
         ball.dy*= -1
-        
-    if ball.xcor() > 390:
-        ball.goto(0,0)
-        ball.dx*= -1
+    
+    #Left and Right   
+    if ball.xcor() > 350:
         score_a +=1 #increse player a score
         pen.clear()
         pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align = "center", font=("Courier", 16, "bold")) #update score on screen
-        
-    if ball.xcor() < -390:
         ball.goto(0,0)
-        ball.dx*= -1
+        ball.dx *=-1
+        
+    elif ball.xcor() < -350:
         score_b +=1 #increase player b score
         pen.clear() 
         pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align = "center", font=("Courier", 16, "bold"))
+        ball.goto(0,0)
+        ball.dx *=-1
     
     #Boundry restriction for paddles
     if pad_a.ycor() > 220:
@@ -123,6 +125,7 @@ while True:
     if ((ball.xcor() > 340) and (ball.xcor() < 350)) and ((ball.ycor() < pad_b.ycor() + 40) and (ball.ycor() > pad_b.ycor()- 40)):
         ball.setx(340)
         ball.dx *= -1
-    if ((ball.xcor() < -340) and (ball.xcor() > -350)) and ((ball.ycor() < pad_a.ycor() + 40) and (ball.ycor() > pad_a.ycor()- 40)):
-        ball.set(-340)
+    elif ((ball.xcor() < -340) and (ball.xcor() > -350)) and ((ball.ycor() < pad_a.ycor() + 40) and (ball.ycor() > pad_a.ycor()- 40)):
+        ball.setx(-340)
         ball.dx *= -1
+        
