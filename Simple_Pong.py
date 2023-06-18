@@ -7,22 +7,26 @@ wn.bgcolor("black")
 wn.setup(width = 800, height =600)
 wn.tracer(0) #stops the window from updating, helps to speed up the preocess
 
+#Scores
+score_a = 0
+score_b = 0
+
 #Paddle 1
-pad_1 = turtle.Turtle() #creating object
-pad_1.speed(0) #speed of animation = max
-pad_1.shape("square")
-pad_1.color("white")
-pad_1.shapesize(stretch_wid=5, stretch_len=1)
-pad_1.penup()
-pad_1.goto(-350,0)
+pad_a = turtle.Turtle() #creating object
+pad_a.speed(0) #speed of animation = max
+pad_a.shape("square")
+pad_a.color("white")
+pad_a.shapesize(stretch_wid=5, stretch_len=1)
+pad_a.penup()
+pad_a.goto(-350,0)
 #Paddle 2
-pad_2 = turtle.Turtle() #creating object
-pad_2.speed(0) #speed of animation = max
-pad_2.shape("square")
-pad_2.color("white")
-pad_2.shapesize(stretch_wid=5, stretch_len=1)
-pad_2.penup()
-pad_2.goto(350,0)
+pad_b = turtle.Turtle() #creating object
+pad_b.speed(0) #speed of animation = max
+pad_b.shape("square")
+pad_b.color("white")
+pad_b.shapesize(stretch_wid=5, stretch_len=1)
+pad_b.penup()
+pad_b.goto(350,0)
 #Ball
 ball = turtle.Turtle() #creating object
 ball.speed(0) #speed of animation = max
@@ -33,33 +37,43 @@ ball.goto(0,0)
 ball.dx=0.2 #the ball moves by 0.3 pixel x
 ball.dy=0.2
 
+#Scoring screen
+pen = turtle.Turtle()
+pen.speed(0) #animation speed
+pen.color("white")
+pen.penup() #move the pen without it drawing the line
+pen.hideturtle()
+pen.goto(0, 260)
+pen.write("Player A: 0  Player B: 0", align = "center", font=("Courier", 16, "bold"))
+
+
 #Function for movement
-def pad_1_up():
-    y = pad_1.ycor() #from turtle module, returns the y coordinates
+def pad_a_up():
+    y = pad_a.ycor() #from turtle module, returns the y coordinates
     y += 20
-    pad_1.sety(y) #set ycor to new value of y
+    pad_a.sety(y) #set ycor to new value of y
     
-def pad_1_down():
-    y = pad_1.ycor() #from turtle module, returns the y coordinates
+def pad_a_down():
+    y = pad_a.ycor() #from turtle module, returns the y coordinates
     y -= 20
-    pad_1.sety(y) #set ycor to new value of y
+    pad_a.sety(y) #set ycor to new value of y
     
-def pad_2_up():
-    y = pad_2.ycor() #from turtle module, returns the y coordinates
+def pad_b_up():
+    y = pad_b.ycor() #from turtle module, returns the y coordinates
     y += 20
-    pad_2.sety(y) #set ycor to new value of y
+    pad_b.sety(y) #set ycor to new value of y
     
-def pad_2_down():
-    y = pad_2.ycor() #from turtle module, returns the y coordinates
+def pad_b_down():
+    y = pad_b.ycor() #from turtle module, returns the y coordinates
     y -= 20
-    pad_2.sety(y) #set ycor to new value of y
+    pad_b.sety(y) #set ycor to new value of y
 
 #Keyboard binding
 wn.listen() #listen to keyboard commands/inputs
-wn.onkeypress(pad_1_up, "w")
-wn.onkeypress(pad_1_down, "s")
-wn.onkeypress(pad_2_up, "Up")
-wn.onkeypress(pad_2_down, "Down")
+wn.onkeypress(pad_a_up, "w")
+wn.onkeypress(pad_a_down, "s")
+wn.onkeypress(pad_b_up, "Up")
+wn.onkeypress(pad_b_down, "Down")
 
 #Main game loop
 while True:
@@ -81,28 +95,34 @@ while True:
     if ball.xcor() > 390:
         ball.goto(0,0)
         ball.dx*= -1
+        score_a +=1 #increse player a score
+        pen.clear()
+        pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align = "center", font=("Courier", 16, "bold")) #update score on screen
         
     if ball.xcor() < -390:
         ball.goto(0,0)
         ball.dx*= -1
+        score_b +=1 #increase player b score
+        pen.clear() 
+        pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align = "center", font=("Courier", 16, "bold"))
     
     #Boundry restriction for paddles
-    if pad_1.ycor() > 220:
-        pad_1.sety(220) 
+    if pad_a.ycor() > 220:
+        pad_a.sety(220) 
         
-    if pad_1.ycor() < -220:
-        pad_1.sety(-220)
+    if pad_a.ycor() < -220:
+        pad_a.sety(-220)
     
-    if pad_2.ycor() > 220:
-        pad_2.sety(220) 
+    if pad_b.ycor() > 220:
+        pad_b.sety(220) 
         
-    if pad_2.ycor() < -220:
-        pad_2.sety(-220)
+    if pad_b.ycor() < -220:
+        pad_b.sety(-220)
         
     #paddle-ball collision
-    if ((ball.xcor() > 340) and (ball.xcor() < 350)) and ((ball.ycor() < pad_2.ycor() + 40) and (ball.ycor() > pad_2.ycor()- 40)):
+    if ((ball.xcor() > 340) and (ball.xcor() < 350)) and ((ball.ycor() < pad_b.ycor() + 40) and (ball.ycor() > pad_b.ycor()- 40)):
         ball.setx(340)
         ball.dx *= -1
-    if ((ball.xcor() < -340) and (ball.xcor() > -350)) and ((ball.ycor() < pad_1.ycor() + 40) and (ball.ycor() > pad_1.ycor()- 40)):
+    if ((ball.xcor() < -340) and (ball.xcor() > -350)) and ((ball.ycor() < pad_a.ycor() + 40) and (ball.ycor() > pad_a.ycor()- 40)):
         ball.set(-340)
         ball.dx *= -1
