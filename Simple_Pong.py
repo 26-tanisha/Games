@@ -70,3 +70,32 @@ while True:
     ball.setx(ball.xcor() + ball.dx)
     ball.sety(ball.ycor() + ball.dy)
     
+    #Border Checking for ball
+    if ball.ycor() > 290:
+        ball.sety(290)
+        ball.dy*= -1 #reverse the ball direction (bounce of the ball from boundry)
+        
+    if ball.ycor() < -290:
+        ball.sety(-290)
+        ball.dy*= -1
+        
+    if ball.xcor() > 390:
+        ball.goto(0,0)
+        ball.dx*= -1
+        
+    if ball.xcor() < -390:
+        ball.goto(0,0)
+        ball.dx*= -1
+    
+    #Boundry restriction for paddles
+    if pad_1.ycor() > 220:
+        pad_1.sety(220) 
+        
+    if pad_1.ycor() < -220:
+        pad_1.sety(-220)
+    
+    if pad_2.ycor() > 220:
+        pad_2.sety(220) 
+        
+    if pad_2.ycor() < -220:
+        pad_2.sety(-220)
