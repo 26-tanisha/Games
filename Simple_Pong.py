@@ -1,5 +1,4 @@
 #Creating a Simple Pong game using Python 3
-
 import turtle #allows to do basic grapic and gaming for begineers (pre-installed)
 wn = turtle.Screen() #create window for game 
 wn.title("Pong Game")
@@ -34,8 +33,8 @@ ball.shape("circle")
 ball.color("white")
 ball.penup()
 ball.goto(0,0)
-ball.dx=0.2 #the ball moves by 0.3 pixel x
-ball.dy=0.2
+ball.dx=0.3 #the ball moves by 0.3 pixel x
+ball.dy=0.3
 
 #Scoring screen
 pen = turtle.Turtle()
@@ -88,10 +87,10 @@ while True:
     if ball.ycor() > 290:
         ball.sety(290)
         ball.dy*= -1 #reverse the ball direction (bounce of the ball from boundry)
-        
     elif ball.ycor() < -290:
         ball.sety(-290)
         ball.dy*= -1
+        
     
     #Left and Right   
     if ball.xcor() > 350:
@@ -125,7 +124,10 @@ while True:
     if ((ball.xcor() > 340) and (ball.xcor() < 350)) and ((ball.ycor() < pad_b.ycor() + 40) and (ball.ycor() > pad_b.ycor()- 40)):
         ball.setx(340)
         ball.dx *= -1
+        
+        
     elif ((ball.xcor() < -340) and (ball.xcor() > -350)) and ((ball.ycor() < pad_a.ycor() + 40) and (ball.ycor() > pad_a.ycor()- 40)):
         ball.setx(-340)
         ball.dx *= -1
+        
         
